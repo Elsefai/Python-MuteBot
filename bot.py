@@ -22,7 +22,7 @@ class WordTracker:
             self.counts[user_id][word] += message.count(word)
 
     def check_mute(self, user_id):
-        limit = self.user_limits.get(user_id, 8)  # лимит слов долбаеба фраера
+        limit = self.user_limits.get(user_id, 5)  # лимит слов долбаеба фраера
         for count in self.counts[user_id].values():
             if count > limit:
                 return True
@@ -35,7 +35,7 @@ def handle_message(update, context):
     tracker.track(user_id, message)
 
     if tracker.check_mute(user_id):
-        mute_duration = datetime.datetime.now() + datetime.timedelta(minutes=1)  # минуты мута
+        mute_duration = datetime.datetime.now() + datetime.timedelta(minutes=15)  # минуты мута
         mute_until = int(mute_duration.timestamp())  # конвертация в какой то хуюникс
 
         context.bot.restrict_chat_member(
