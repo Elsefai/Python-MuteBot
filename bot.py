@@ -1,6 +1,11 @@
+import os
 import datetime
 from telegram.ext import Updater, MessageHandler, Filters
 from telegram import ChatPermissions
+from dotenv import load_dotenv
+
+load_dotenv()
+token = os.getenv('TELEGRAM_BOT_TOKEN')
 
 class WordTracker:
     def __init__(self):
@@ -42,7 +47,7 @@ def handle_message(update, context):
 
 tracker = WordTracker()
 
-updater = Updater(token='', use_context=True)
+updater = Updater(token=token, use_context=True)
 
 message_handler = MessageHandler(Filters.text & (~Filters.command), handle_message)
 updater.dispatcher.add_handler(message_handler)
